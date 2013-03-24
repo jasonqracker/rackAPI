@@ -44,6 +44,7 @@ while choice not in flavDict:
 
 flavor_id = flavDict[str(choice)]
 
+
 image_id = [cs.servers.create_image(server_id, imageName)][0]
 
 print "Image %s is being created with the ID: %s" % (imageName, image_id)
