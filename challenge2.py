@@ -1,7 +1,6 @@
 import pyrax
 import time
 
-#pyrax.set_http_debug(True)
 pyrax.set_credential_file("/home/hal/.rackspace_cloud_credentials.txt")
 
 cs = pyrax.cloudservers
