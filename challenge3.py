@@ -53,9 +53,8 @@ print ""
 while uploaded < total_bytes:
     uploaded = cf.get_uploaded(upload_key)
 #    print "%s of %s bytes uploaded" % (uploaded, total_bytes)
-#    print "Progress: %4.2f%%" % ((uploaded * 100.0) / total_bytes)
-    print "Files uploading..."
-    time.sleep(5)
+    print "Progress: %3.0f%%" % ((uploaded * 100.0) / total_bytes)
+    time.sleep(2)
     
 print "Upload complete"
 
