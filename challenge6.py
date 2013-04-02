@@ -15,3 +15,4 @@ cont = cf.create_container(name)
 print "Container created: ", cont.name
 
 cf.make_container_public(cont.name, ttl=1800)
+
