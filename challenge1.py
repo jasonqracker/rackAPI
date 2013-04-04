@@ -6,7 +6,7 @@ import pyrax
 import time
 
 #set path to crednetial file:
-pyrax.set_credential_file("/Users/hal/.rackspace_cloud_credentials.txt")
+pyrax.set_credential_file("/Users/jaso4210/.rackspace_cloud_credentials.txt")
 
 cs = pyrax.cloudservers
 
@@ -23,19 +23,21 @@ flavor_512 = [flavor for flavor in cs.flavors.list()
 #create 3 servers - web1, web2 and web3:
 
 n = 1
-
 while n <4:
-    server = "server" + str(n)
-    server = cs.servers.create("web" + str(n), ubuntu124_image.id, flavor_512.id)
-    print "Creating server..."
-    print "ID:", server.id
-    print "Status:", server.status
+    name = "web" + str(n)
+    server  = cs.servers.create(name, ubuntu124_image.id, flavor_512.id)
+    print "=" * 40
+    print "Provisioning Server Name: ", server.name
+    print "Server ID:", server.id
+    print "Server Status:", server.status
     print "Admin password:", server.adminPass
     print "Waiting for network provisioning..."
     while not (server.networks):
-        time.sleep(1)
+        time.sleep(15)
         server = cs.servers.get(server.id)
-    print "Networks:", server.networks
-    print "Server provisioning complete"
+    print "Public Network Address(es) provisioned:", str(server.networks["public"])
+    print "Private Network Address(es) provisioned: ", str(server.networks["private"])
+    print "'",server.name,"' successfully provisioned."   
+    print "=" * 40
     n += 1
     
