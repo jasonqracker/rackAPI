@@ -76,6 +76,7 @@ cname = {"type": "CNAME",
          "ttl" : 600}
 
 recs = dom.add_records([cname])
+
 print recs
 
 
