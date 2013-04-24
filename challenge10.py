@@ -6,6 +6,7 @@
 # - Create a DNS record based on a FQDN for the LB VIP. 
 # - Write the error page html to a file in cloud files for backup.
 # Whew! That one is worth 8 points!
+#!/usr/bin/python
 
 import pyrax
 import time
