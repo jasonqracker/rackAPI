@@ -8,13 +8,10 @@
 # Whew! That one is worth 8 points!
 #!/usr/bin/python
 
-import pyrax
-import time
-import sys
-import os
+import pyrax, time, sys, os
 
 #set path to crednetial file:
-pyrax.set_credential_file("/Users/jaso4210/.rackspace_cloud_credentials.txt")
+pyrax.set_credential_file(".rackspace_cloud_credentials.txt")
 
 cs = pyrax.cloudservers
 clb = pyrax.cloud_loadbalancers
