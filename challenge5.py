@@ -1,3 +1,4 @@
+#!/usr/bin/python
 
 import pyrax
 import time
