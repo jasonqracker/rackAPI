@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # Challenge 8: Write a script that will create a static webpage served out of
 # Cloud Files. The script must create a new container, cdn enable it, enable
 # it to serve an index file, create an index file object, upload the object
