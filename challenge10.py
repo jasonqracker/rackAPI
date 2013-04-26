@@ -11,7 +11,7 @@
 import pyrax, time, sys, os
 
 #set path to crednetial file:
-pyrax.set_credential_file(".rackspace_cloud_credentials.txt")
+pyrax.set_credential_file("/Users/jaso4210/.rackspace_cloud_credentials.txt")
 
 cs = pyrax.cloudservers
 clb = pyrax.cloud_loadbalancers
@@ -99,8 +99,16 @@ vip = clb.VirtualIP(type="PUBLIC")
 
 lb = clb.create("test_lb", port=80, protocol="HTTP",
         nodes=[node1, node2], virtual_ips=[vip])
-while str(lb.status) !+ ""
-time.sleep (10)
+
+vipAdd = lb.virtual_ips[0].address
+#print vipAdd
+
+
+#wait
+while str(lb.status) != "ACTIVE":
+    time.sleep(10)
+    lb = clb.get(lb.id)
+    
 
 print " Cloud loadbalancer provisioned:"
 print [(lb.name, lb.id) for lb in clb.list()]
@@ -112,15 +120,21 @@ lb.add_health_monitor(type="HTTP", delay=10, timeout=10,
         bodyRegex=".* testing .*",
         hostHeader="apichallenge.com")
 
+#wait moar for all teh thingz
+lb = clb.get(lb.id)
+while str(lb.status) != "ACTIVE":
+    time.sleep(10)
+    lb = clb.get(lb.id)
+
 html = "<html><body>Something is afoot at the CircleK!</body></html>"
 lb.set_error_page(html)
 
 print "HTTP monitor and custom error page provisioned, let's create a DNS record for your new VIP."
 
 domain = raw_input("Enter domain: ")
-fqdn = raw_input("Enter FQDN of new A record: ")
-ip = vip
-email = raw_input("Enter an email address: ")
+fqdn = raw_input("Enter FQDN of new A record (Must not exist): ")
+
+
 
 try:
     dom = dns.find(name=domain)
@@ -138,8 +152,8 @@ except pyrax.exceptions.NotFound:
 
 # record contents
 a_rec = {"type": "A",
-        "name": domain,
-        "data": ip,
+        "name": fqdn,
+        "data": vipAdd,
         "ttl": 3600}
 
 recs = dom.add_records([a_rec])
