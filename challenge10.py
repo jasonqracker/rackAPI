@@ -111,8 +111,11 @@ while str(lb.status) != "ACTIVE":
     
 
 print " Cloud loadbalancer provisioned:"
+print "=" * 40
 print [(lb.name, lb.id) for lb in clb.list()]
-
+print "Virtual IP: %s" % vipAdd
+print "=" * 40
+print
 print "Provisioning LB monitor and custom error page..."
 lb.add_health_monitor(type="HTTP", delay=10, timeout=10,
         attemptsBeforeDeactivation=3, path="/",
@@ -128,9 +131,13 @@ while str(lb.status) != "ACTIVE":
 
 html = "<html><body>Something is afoot at the CircleK!</body></html>"
 lb.set_error_page(html)
+print "=" * 40
+print "Custom error page: "
+print html
+print "=" * 40
 
 print "HTTP monitor and custom error page provisioned, let's create a DNS record for your new VIP."
-
+print
 domain = raw_input("Enter domain: ")
 fqdn = raw_input("Enter FQDN of new A record (Must not exist): ")
 
@@ -157,8 +164,10 @@ a_rec = {"type": "A",
         "ttl": 3600}
 
 recs = dom.add_records([a_rec])
+print "=" * 40
 print "The following DNS record has been created: "
 print recs
+print "=" * 40
 
 
 
