@@ -8,7 +8,7 @@ import pyrax
 import pyrax.exceptions
 import sys
 
-pyrax.set_credential_file("/Users/jaso4210/.rackspace_cloud_credentials.txt")
+pyrax.set_credential_file("~/.rackspace_cloud_credentials.txt")
 
 dns = pyrax.cloud_dns
 
