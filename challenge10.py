@@ -15,6 +15,7 @@ pyrax.set_credential_file(".rackspace_cloud_credentials.txt")
 
 cs = pyrax.cloudservers
 clb = pyrax.cloud_loadbalancers
+dns = pyrax.cloud_dns
 
 #find ubuntu 12.04 image:
 
@@ -49,7 +50,7 @@ flavor_512 = [flavor for flavor in cs.flavors.list()
 
 server1 = cs.servers.create("server1", ubuntu124_image, flavor_512)
 print "=" * 40
-print "Provisioning Server Name: ", server.name
+print "Provisioning Server Name: ", server1.name
 print "Server ID:", server1.id
 print "Server Status:", server1.status
 print "Admin password:", server1.adminPass
@@ -98,6 +99,8 @@ vip = clb.VirtualIP(type="PUBLIC")
 
 lb = clb.create("test_lb", port=80, protocol="HTTP",
         nodes=[node1, node2], virtual_ips=[vip])
+while str(lb.status) !+ ""
+time.sleep (10)
 
 print " Cloud loadbalancer provisioned:"
 print [(lb.name, lb.id) for lb in clb.list()]
@@ -112,5 +115,36 @@ lb.add_health_monitor(type="HTTP", delay=10, timeout=10,
 html = "<html><body>Something is afoot at the CircleK!</body></html>"
 lb.set_error_page(html)
 
-print "HTTP monitor and custom error page provisioned:"
+print "HTTP monitor and custom error page provisioned, let's create a DNS record for your new VIP."
+
+domain = raw_input("Enter domain: ")
+fqdn = raw_input("Enter FQDN of new A record: ")
+ip = vip
+email = raw_input("Enter an email address: ")
+
+try:
+    dom = dns.find(name=domain)
+except pyrax.exceptions.NotFound:
+    answer = raw_input("The domain '%s' was not found. Do you want to create it? [y/n]" % domain)
+    if not answer.lower().startswith("y"):
+        sys.exit()
+    try:
+        dom = dns.create(name=domain, emailAddress="sample@example.edu",
+                ttl=900, comment="sample domain")
+    except pyrax.exceptions.DomainCreationFailed as e:
+        print "Domain creation failed:", e
+    print "Domain created:", dom
+    print
+
+# record contents
+a_rec = {"type": "A",
+        "name": domain,
+        "data": ip,
+        "ttl": 3600}
+
+recs = dom.add_records([a_rec])
+print "The following DNS record has been created: "
+print recs
+
+
 
