@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # challenge6 Write a script
 # that creates a CDN-enabled container in
 # Cloud Files. Worth 1 Point
