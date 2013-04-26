@@ -7,7 +7,7 @@ import pyrax
 import time
 
 
-pyrax.set_credential_file("/Users/hal/.rackspace_cloud_credentials.txt")
+pyrax.set_credential_file("~/.rackspace_cloud_credentials.txt")
 
 cs = pyrax.cloudservers
 clb = pyrax.cloud_loadbalancers
