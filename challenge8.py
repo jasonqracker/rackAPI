@@ -11,7 +11,7 @@ import os
 import sys
 import pyrax.exceptions as exc
 
-pyrax.set_credential_file("/Users/hal/.rackspace_cloud_credentials.txt")
+pyrax.set_credential_file("~/.rackspace_cloud_credentials.txt")
 
 cf = pyrax.cloudfiles
 dns = pyrax.cloud_dns
