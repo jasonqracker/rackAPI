@@ -3,7 +3,7 @@
 import pyrax
 import time
 
-pyrax.set_credential_file("/Users/hal/.rackspace_cloud_credentials.txt")
+pyrax.set_credential_file("~/.rackspace_cloud_credentials.txt")
 
 cdb = pyrax.cloud_databases
 
