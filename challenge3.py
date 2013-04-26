@@ -26,7 +26,7 @@ import os
 import sys
 import time
 
-pyrax.set_credential_file("/Users/jaso4210/.rackspace_cloud_credentials.txt")
+pyrax.set_credential_file("~/.rackspace_cloud_credentials.txt")
 
 cf = pyrax.cloudfiles
 
